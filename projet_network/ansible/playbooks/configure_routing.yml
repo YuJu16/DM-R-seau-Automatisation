@@ -1,0 +1,33 @@
+---
+- name: Configure VLANS
+  hosts: switches
+  collections:
+    - ansible.network
+
+
+- name: Configure Routing between VLANs
+  hosts: l3_switches
+  gather_facts: no
+  tasks:
+    - name: Configure IP addresses for VLANs
+      frr_interfaces:
+        name: "Vlan{{ item.id }}"
+        ip_address: "{{ item.gateway }}"
+        state: up
+      with_items: "{{ vlans }}"
+      notify:
+        - Save config
+
+    - name: Configure static routing
+      frr_route:
+        destination: "{{ item.subnet }}"
+        gateway: "{{ item.gateway }}"
+        state: present
+      with_items: "{{ vlans }}"
+      notify:
+        - Save config
+
+  handlers:
+    - name: Save config
+      frr_config:
+        config: "write memory"

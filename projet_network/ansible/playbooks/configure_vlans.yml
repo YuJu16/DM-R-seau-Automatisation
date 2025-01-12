@@ -1,0 +1,57 @@
+---
+- name: Configurer les VLANs sur les switches
+  hosts: localhost
+  gather_facts: no
+  tasks:
+    - name: Copier la configuration des VLANs sur switch-core
+      copy:
+        src: ../../docker/configs/switch-core/frr.conf
+        dest: /etc/frr/frr.conf
+        owner: root
+        group: root
+        mode: '0644'
+      delegate_to: switch-core
+
+    - name: Redémarrer FRR sur switch-core
+      shell: systemctl restart frr
+      delegate_to: switch-core
+
+    - name: Copier la configuration des VLANs sur switch1
+      copy:
+        src: ../../docker/configs/switch1/frr.conf
+        dest: /etc/frr/frr.conf
+        owner: root
+        group: root
+        mode: '0644'
+      delegate_to: switch1
+
+    - name: Redémarrer FRR sur switch1
+      shell: systemctl restart frr
+      delegate_to: switch1
+
+    - name: Copier la configuration des VLANs sur switch2
+      copy:
+        src: ../../docker/configs/switch2/frr.conf
+        dest: /etc/frr/frr.conf
+        owner: root
+        group: root
+        mode: '0644'
+      delegate_to: switch2
+
+    - name: Redémarrer FRR sur switch2
+      shell: systemctl restart frr
+      delegate_to: switch2
+
+    - name: Copier la configuration des VLANs sur switch3
+      copy:
+        src: ../../docker/configs/switch3/frr.conf
+        dest: /etc/frr/frr.conf
+        owner: root
+        group: root
+        mode: '0644'
+      delegate_to: switch3
+
+    - name: Redémarrer FRR sur switch3
+      shell: systemctl restart frr
+      delegate_to: switch3
+

@@ -1,0 +1,58 @@
+version: '3'
+services:
+  switch-core:
+    image: frrouting/frr:latest
+    hostname: switch-core
+    privileged: true
+    volumes:
+      - ./configs/switch-core:/etc/frr
+    networks:
+      - backbone
+      - manage
+
+  switch1:
+    image: frrouting/frr:latest
+    hostname: switch1
+    privileged: true
+    volumes:
+      - ./configs/switch1:/etc/frr
+    networks:
+      - backbone
+      - vlan10
+      - vlan20
+
+  switch2:
+    image: frrouting/frr:latest
+    hostname: switch2
+    privileged: true
+    volumes:
+      - ./configs/switch2:/etc/frr
+    networks:
+      - backbone
+      - vlan30
+      - vlan40
+
+  switch3:
+    image: frrouting/frr:latest
+    hostname: switch3
+    privileged: true
+    volumes:
+      - ./configs/switch3:/etc/frr
+    networks:
+      - backbone
+      - vlan10
+      - vlan30
+
+networks:
+  backbone:
+    driver: bridge
+  manage:
+    driver: bridge
+  vlan10:
+    driver: bridge
+  vlan20:
+    driver: bridge
+  vlan30:
+    driver: bridge
+  vlan40:
+    driver: bridge

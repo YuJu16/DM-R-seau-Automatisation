@@ -1,0 +1,11 @@
+# Enable zebra (must always be enabled)
+zebra=yes
+
+# Enable routing protocols for switch2
+ospfd=yes
+bgpd=no
+
+# Enable other services if needed
+ripd=no
+isisd=no
+

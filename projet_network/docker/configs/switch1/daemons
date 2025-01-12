@@ -1,0 +1,11 @@
+# Enable zebra (must always be enabled)
+zebra=yes
+
+# Enable routing protocols
+ospfd=yes
+bgpd=no
+
+# Enable other services if needed (comment or remove those you don't need)
+ripd=no
+isisd=no
+
